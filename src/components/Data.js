@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
-import axios from "axios";
+
 import BarChart from "./BarChart";
+import axios from "axios";
 
 const Data = (props) => {
   const { area } = props;
@@ -30,11 +31,7 @@ const Data = (props) => {
         <Fragment>
           <BarChart data={data} />
 
-          {data.map((d) => (
-            <p>
-              {d.name} - <b>{d.date}</b> - {d.cases.daily}
-            </p>
-          ))}
+          
         </Fragment>
       ) : (
         <p>loading...</p>

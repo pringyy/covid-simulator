@@ -1,22 +1,17 @@
-import React, { memo, useState } from "react";
 import {
   ComposableMap,
   Geographies,
   Geography,
   ZoomableGroup,
 } from "react-simple-maps";
-import Data from "./Data";
+import React, { memo } from "react";
 
 const geoUrl =
   "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/gb/topo_lad.json";
 
-const Map = ({ setTooltipContent }) => {
-  const [showMap, setShowMap] = useState(true);
-  const [area, setArea] = useState("");
-
+const Map = ({ setTooltipContent, areas, setAreas }) => {
   return (
     <>
-      {showMap ? (
         <ComposableMap data-tip="Select County">
           <ZoomableGroup zoom={8} maxZoom={100} center={[-2, 50]}>
             <Geographies geography={geoUrl}>
@@ -32,8 +27,7 @@ const Map = ({ setTooltipContent }) => {
                       setTooltipContent("");
                     }}
                     onClick={() => {
-                      setShowMap(false);
-                      setArea(geo.properties.LAD13NM);
+                      setAreas([...areas, geo.properties.LAD13NM]);
                     }}
                     style={{
                       default: {
@@ -57,9 +51,6 @@ const Map = ({ setTooltipContent }) => {
             </Geographies>
           </ZoomableGroup>
         </ComposableMap>
-      ) : (
-        <Data area={area} />
-      )}
     </>
   );
 };
