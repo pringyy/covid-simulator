@@ -14,32 +14,36 @@ const Map = ({ setTooltipContent }) => {
   return (
     <>
       <ComposableMap data-tip="Select County">
-        <ZoomableGroup zoom={8} center={[-2,50]}>
+        <ZoomableGroup zoom={8} maxZoom={100} center={[-2,50]}>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
+
+  
                   onMouseEnter={() => {
                     setTooltipContent(geo.properties.LAD13NM);
+                    console.log(geo.properties)
                   }}
                   onMouseLeave={() => {
                     setTooltipContent("");
                   }}
                   style={{
                     default: {
-                      fill: "a3f7bf",
-                      borderStyle:'solid',
+                      fill: "29a19c",
+                      outline:"none",
+                      strokeWidth: 0.01,
+                      stroke:'#27323a'
                     },
                     hover: {
-                      fill: "#F53",
+                      fill: "a3f7bf",
                       outline: "none"
                     },
                     pressed: {
-                      fill: "#E42",
-                      outline: "none"
-                    }
+                      fill: "#FFF",
+                      outline: "none"}
                   }}
                 />
               ))

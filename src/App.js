@@ -1,3 +1,5 @@
+import './styles.css'
+
 import Map from './components/map'
 import ReactTooltip from 'react-tooltip'
 import {useState} from 'react'
