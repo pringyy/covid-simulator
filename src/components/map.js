@@ -12,8 +12,11 @@ const geoUrl =
 const Map = ({ setTooltipContent, areas, setAreas }) => {
   return (
     <>
-      <ComposableMap data-tip="Select County">
-        <ZoomableGroup zoom={8} maxZoom={100} center={[-2, 50]}>
+      <ComposableMap
+        data-tip="Select County"
+        style={{ height: "100%", width: "100%" }}
+      >
+        <ZoomableGroup zoom={30} minZoom={30} maxZoom={100} center={[-2, 55]}>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => (

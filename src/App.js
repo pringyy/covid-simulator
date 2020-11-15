@@ -4,26 +4,37 @@ import Data from "./components/Data";
 import Map from "./components/map";
 import ReactTooltip from "react-tooltip";
 import React, { useState } from "react";
+import { Grid } from "@material-ui/core";
 
 const App = () => {
   const [areas, setAreas] = useState([]);
   const [content, setContent] = useState("");
+
   return (
-    <div>
-      <div style={{ height: "50vh" }}>
+    <Grid container spacing={1}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={6}
+        style={{
+          height: "100vh",
+        }}
+      >
         <Map
           setTooltipContent={setContent}
           setAreas={(area) => setAreas(area)}
           areas={areas}
         />
         <ReactTooltip>{content}</ReactTooltip>
-      </div>
-      <div>
+      </Grid>
+
+      <Grid item xs={12} sm={12} md={6}>
         {areas.map((area) => (
           <Data area={area} />
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

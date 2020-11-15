@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Grid } from "@material-ui/core";
 import BarChart from "./BarChart";
 import LineGraph from "./LineGraph";
 
@@ -28,7 +29,7 @@ const Data = (props) => {
   return (
     <>
       {loaded ? (
-        <>
+        <Grid container spacing={1}>
           <BarChart data={data} area={area} type="Cases" />
           <LineGraph data={data} area={area} type="Cases" />
 
@@ -36,7 +37,7 @@ const Data = (props) => {
           <LineGraph data={data} area={area} type="Deaths" />
 
           {/* <PieChart data={data} area={area} /> */}
-        </>
+        </Grid>
       ) : (
         <p>loading...</p>
       )}
