@@ -2,14 +2,15 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import BarChart from "./BarChart";
 
-const Data = () => {
+const Data = (props) => {
+  const { area } = props;
+
   const [data, setData] = useState({});
-  const [area, setArea] = useState("S12000019");
   const [loaded, setLoaded] = useState(false);
 
   const endpoint =
     "https://api.coronavirus.data.gov.uk/v1/data?" +
-    `filters=areaType=utla;areaCode=${area}&` +
+    `filters=areaType=ltla;areaName=${area}&` +
     'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesBySpecimenDate","cumulative":"cumCasesBySpecimenDateRate"},"deaths":{"daily":"newDeathsByDeathDate","cumulative":"cumDeathsByDeathDate"}}';
 
   useEffect(() => {

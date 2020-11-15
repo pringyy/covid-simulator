@@ -13,12 +13,6 @@ svg {
   vertical-align: middle;
 }
 
-text {
-  fill: #ffffff;
-  font-size: 10px;
-  font-weight: bold;
-}
-
 .map {
   outline-offset: 0px;
   outline: "auto";
