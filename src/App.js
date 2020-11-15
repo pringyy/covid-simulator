@@ -4,7 +4,7 @@ import Map from './components/map'
 import ReactTooltip from 'react-tooltip'
 import {useState} from 'react'
 
-function App() {
+const App= ()=> {
   const [content, setContent] = useState("");
   return (
     <div style={{backgroundColor:"#27323a"}}>
@@ -13,6 +13,6 @@ function App() {
   <ReactTooltip>{content}</ReactTooltip>
   </div>
   );
-}
+};
 
 export default App;
