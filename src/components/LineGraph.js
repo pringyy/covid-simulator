@@ -1,38 +1,38 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const BarChart = (props) => {
+const LineGraph = (props) => {
   const { data, area, type } = props;
 
   const stripData = (data) => {
     let dates = [],
-      dailyCases = [],
-      dailyDeaths = [];
+      cases = [],
+      deaths = [];
 
     for (let i = 0; i < data.length; i++) {
       dates.push(data[i].date);
 
       if (type === "Cases") {
-        dailyCases.push(data[i].cases.daily);
+        cases.push(data[i].cases.cumulative);
       } else {
-        dailyDeaths.push(data[i].deaths.daily);
+        deaths.push(data[i].deaths.cumulative);
       }
     }
-    return [dates, dailyCases, dailyDeaths];
+    return [dates, cases, deaths];
   };
 
-  const [dates, dailyCases, dailyDeaths] = stripData(data);
+  const [dates, cases, deaths] = stripData(data);
 
   const chart = {
     series: [
       {
-        name: "Daily " + type,
-        data: type === "Cases" ? dailyCases.reverse() : dailyDeaths.reverse(),
+        name: "Cumulative " + type,
+        data: type === "Cases" ? cases.reverse() : deaths.reverse(),
       },
     ],
     options: {
       chart: {
-        type: "bar",
+        type: "line",
         toolbar: {
           show: false,
         },
@@ -40,18 +40,11 @@ const BarChart = (props) => {
           enabled: false,
         },
       },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-        },
-      },
       dataLabels: {
         enabled: false,
       },
       stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"],
+        curve: "smooth",
       },
       xaxis: {
         categories: dates.reverse(),
@@ -74,7 +67,7 @@ const BarChart = (props) => {
         opacity: 1,
       },
       title: {
-        text: "Daily COVID-19 " + type + " in " + area,
+        text: "Cumulative COVID-19 " + type + " in " + area,
         align: "center",
       },
 
@@ -92,19 +85,19 @@ const BarChart = (props) => {
     <>
       {chart.series[0].data.every((element) => element === null) ? (
         <p>
-          No daily data available for {type.toLowerCase()} in {area}.
+          No cumulative data available for {type.toLowerCase()} in {area}.
         </p>
       ) : (
         <ReactApexChart
           options={chart.options}
           series={chart.series}
-          type="bar"
+          type="line"
           height={350}
-          width={350}
+          width={700}
         />
       )}
     </>
   );
 };
 
-export default BarChart;
+export default LineGraph;

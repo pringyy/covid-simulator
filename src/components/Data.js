@@ -1,6 +1,8 @@
-import { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Grid } from "@material-ui/core";
 import BarChart from "./BarChart";
+import LineGraph from "./LineGraph";
 
 const Data = (props) => {
   const { area } = props;
@@ -11,7 +13,7 @@ const Data = (props) => {
   const endpoint =
     "https://api.coronavirus.data.gov.uk/v1/data?" +
     `filters=areaType=ltla;areaName=${area}&` +
-    'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesBySpecimenDate","cumulative":"cumCasesBySpecimenDateRate"},"deaths":{"daily":"newDeathsByDeathDate","cumulative":"cumDeathsByDeathDate"}}';
+    'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesBySpecimenDate","cumulative":"cumCasesBySpecimenDateRate"},"deaths":{"daily":"newDeathsByDeathDate","cumulative":"cumDeathsByDeathDate"},"covidOccupiedMVBeds":"covidOccupiedMVBeds"}';
 
   useEffect(() => {
     axios
@@ -25,21 +27,21 @@ const Data = (props) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       {loaded ? (
-        <Fragment>
-          <BarChart data={data} />
+        <Grid container spacing={1}>
+          <BarChart data={data} area={area} type="Cases" />
+          <LineGraph data={data} area={area} type="Cases" />
 
-          {data.map((d) => (
-            <p>
-              {d.name} - <b>{d.date}</b> - {d.cases.daily}
-            </p>
-          ))}
-        </Fragment>
+          <BarChart data={data} area={area} type="Deaths" />
+          <LineGraph data={data} area={area} type="Deaths" />
+
+          {/* <PieChart data={data} area={area} /> */}
+        </Grid>
       ) : (
         <p>loading...</p>
       )}
-    </Fragment>
+    </>
   );
 };
 
