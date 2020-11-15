@@ -1,13 +1,17 @@
-import { Fragment } from "react";
-import "./App.css";
-import Data from "./components/Data";
+import './styles.css'
 
-const App = () => {
+import Map from './components/map'
+import ReactTooltip from 'react-tooltip'
+import {useState} from 'react'
+
+const App= ()=> {
+  const [content, setContent] = useState("");
   return (
-    <Fragment>
-      <h1>Covid simulator</h1>
-      <Data />
-    </Fragment>
+    <div style={{backgroundColor:"#27323a"}}>
+    <Map setTooltipContent={setContent}
+/>
+  <ReactTooltip>{content}</ReactTooltip>
+  </div>
   );
 };
 
