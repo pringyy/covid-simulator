@@ -3,12 +3,13 @@ import axios from "axios";
 
 const Data = () => {
   const [data, setData] = useState({});
+  const [area, setArea] = useState("S12000033");
   const [loaded, setLoaded] = useState(false);
 
   const endpoint =
     "https://api.coronavirus.data.gov.uk/v1/data?" +
-    "filters=areaType=nation;areaName=scotland&" +
-    'structure={"date":"date","newCases":"newCasesByPublishDate"}';
+    `filters=areaCode=${area}&` +
+    'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesByPublishDate","cumulative":"cumCasesByPublishDate"},"deaths":{"daily":"newDeathsByDeathDate","cumulative":"cumDeathsByDeathDate"}}';
 
   useEffect(() => {
     axios
@@ -26,11 +27,9 @@ const Data = () => {
       {loaded ? (
         <Fragment>
           {data.map((d) => (
-            <Fragment>
-              <p>
-                <b>{d["date"]}</b> - {d["newCases"]}
-              </p>
-            </Fragment>
+            <p>
+              {d.name} - <b>{d.date}</b> - {d.cases.daily}
+            </p>
           ))}
         </Fragment>
       ) : (
