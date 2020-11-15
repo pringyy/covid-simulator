@@ -44,7 +44,7 @@ const LineGraph = (props) => {
         enabled: false,
       },
       stroke: {
-        curve: "straight",
+        curve: "smooth",
       },
       xaxis: {
         categories: dates.reverse(),
@@ -82,15 +82,21 @@ const LineGraph = (props) => {
   };
 
   return (
-    <div>
-      <ReactApexChart
-        options={chart.options}
-        series={chart.series}
-        type="line"
-        height={350}
-        width={350}
-      />
-    </div>
+    <>
+      {chart.series[0].data.every((element) => element === null) ? (
+        <p>
+          No cumulative data available for {type.toLowerCase()} in {area}.
+        </p>
+      ) : (
+        <ReactApexChart
+          options={chart.options}
+          series={chart.series}
+          type="line"
+          height={350}
+          width={700}
+        />
+      )}
+    </>
   );
 };
 

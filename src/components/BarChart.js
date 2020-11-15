@@ -89,15 +89,21 @@ const BarChart = (props) => {
   };
 
   return (
-    <div>
-      <ReactApexChart
-        options={chart.options}
-        series={chart.series}
-        type="bar"
-        height={350}
-        width={350}
-      />
-    </div>
+    <>
+      {chart.series[0].data.every((element) => element === null) ? (
+        <p>
+          No daily data available for {type.toLowerCase()} in {area}.
+        </p>
+      ) : (
+        <ReactApexChart
+          options={chart.options}
+          series={chart.series}
+          type="bar"
+          height={350}
+          width={350}
+        />
+      )}
+    </>
   );
 };
 

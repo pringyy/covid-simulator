@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BarChart from "./BarChart";
 import LineGraph from "./LineGraph";
+import PieChart from "./PieChart";
 
 const Data = (props) => {
   const { area } = props;
@@ -12,7 +13,7 @@ const Data = (props) => {
   const endpoint =
     "https://api.coronavirus.data.gov.uk/v1/data?" +
     `filters=areaType=ltla;areaName=${area}&` +
-    'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesBySpecimenDate","cumulative":"cumCasesBySpecimenDateRate"},"deaths":{"daily":"newDeathsByDeathDate","cumulative":"cumDeathsByDeathDate"}}';
+    'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesBySpecimenDate","cumulative":"cumCasesBySpecimenDateRate"},"deaths":{"daily":"newDeathsByDeathDate","cumulative":"cumDeathsByDeathDate"},"covidOccupiedMVBeds":"covidOccupiedMVBeds"}';
 
   useEffect(() => {
     axios
@@ -34,6 +35,8 @@ const Data = (props) => {
 
           <BarChart data={data} area={area} type="Deaths" />
           <LineGraph data={data} area={area} type="Deaths" />
+
+          {/* <PieChart data={data} area={area} /> */}
         </>
       ) : (
         <p>loading...</p>
