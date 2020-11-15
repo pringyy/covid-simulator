@@ -9,9 +9,8 @@ const App = () => {
   const [areas, setAreas] = useState([])
   const [content, setContent] = useState("");
   return (
-    // <div style={{ backgroundColor: "#27323a" }}>
     <div>
-      <div style={{height: '50vh', width: '50vw'}}>
+      <div style={{height:'50vh'}}>
       <Map setTooltipContent={setContent} setAreas={(area) => setAreas(area)} areas={areas} />
       <ReactTooltip>{content}</ReactTooltip>
       </div>
