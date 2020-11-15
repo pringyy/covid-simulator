@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BarChart from "./BarChart";
+import LineGraph from "./LineGraph";
 
 const Data = (props) => {
   const { area } = props;
@@ -29,7 +30,10 @@ const Data = (props) => {
       {loaded ? (
         <>
           <BarChart data={data} area={area} type="Cases" />
+          <LineGraph data={data} area={area} type="Cases" />
+
           <BarChart data={data} area={area} type="Deaths" />
+          <LineGraph data={data} area={area} type="Deaths" />
         </>
       ) : (
         <p>loading...</p>
