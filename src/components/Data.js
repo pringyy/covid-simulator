@@ -5,7 +5,6 @@ import BarChart from "./BarChart";
 const Data = () => {
   const [data, setData] = useState({});
   const [area, setArea] = useState("S12000019");
-
   const [loaded, setLoaded] = useState(false);
 
   const endpoint =
