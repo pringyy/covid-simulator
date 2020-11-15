@@ -1,27 +1,33 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const stripData = (data) => {
-  let dates = [],
-    dailyCases = [];
-
-  for (let i = 0; i < data.length; i++) {
-    dates.push(data[i].date);
-    dailyCases.push(data[i].cases.daily);
-  }
-  return [dates, dailyCases];
-};
-
 const BarChart = (props) => {
-  const { data } = props;
+  const { data, area, type } = props;
 
-  const [dates, dailyCases] = stripData(data);
+  const stripData = (data) => {
+    let dates = [],
+      dailyCases = [],
+      dailyDeaths = [];
+
+    for (let i = 0; i < data.length; i++) {
+      dates.push(data[i].date);
+
+      if (type === "Cases") {
+        dailyCases.push(data[i].cases.daily);
+      } else {
+        dailyDeaths.push(data[i].deaths.daily);
+      }
+    }
+    return [dates, dailyCases, dailyDeaths];
+  };
+
+  const [dates, dailyCases, dailyDeaths] = stripData(data);
 
   const chart = {
     series: [
       {
-        name: "Daily Cases",
-        data: dailyCases.reverse(),
+        name: "Daily " + type,
+        data: type === "Cases" ? dailyCases.reverse() : dailyDeaths.reverse(),
       },
     ],
     options: {
@@ -52,20 +58,30 @@ const BarChart = (props) => {
         type: "datetime",
         labels: {
           format: "MMM yy",
+          minHeight: 50,
+          maxHeight: 100,
+        },
+        title: {
+          text: "Date",
         },
       },
       yaxis: {
         title: {
-          text: "Daily Cases",
+          text: "Number of " + type,
         },
       },
       fill: {
         opacity: 1,
       },
+      title: {
+        text: "Daily COVID-19 " + type + " in " + area,
+        align: "center",
+      },
+
       tooltip: {
         y: {
           formatter: (val) => {
-            return val + " cases";
+            return val + " " + type;
           },
         },
       },
