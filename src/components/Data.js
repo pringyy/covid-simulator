@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BarChart from "./BarChart";
 import LineGraph from "./LineGraph";
-import PieChart from "./PieChart";
 
 const Data = (props) => {
   const { area } = props;

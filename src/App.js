@@ -1,16 +1,28 @@
 import "./styles.css";
 
-import Map from "./components/Map";
+import Data from "./components/Data";
+import Map from "./components/map";
 import ReactTooltip from "react-tooltip";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const App = () => {
+  const [areas, setAreas] = useState([]);
   const [content, setContent] = useState("");
   return (
-    // <div style={{ backgroundColor: "#27323a" }}>
     <div>
-      <Map setTooltipContent={setContent} />
-      <ReactTooltip>{content}</ReactTooltip>
+      <div style={{ height: "50vh" }}>
+        <Map
+          setTooltipContent={setContent}
+          setAreas={(area) => setAreas(area)}
+          areas={areas}
+        />
+        <ReactTooltip>{content}</ReactTooltip>
+      </div>
+      <div>
+        {areas.map((area) => (
+          <Data area={area} />
+        ))}
+      </div>
     </div>
   );
 };
