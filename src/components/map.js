@@ -65,7 +65,6 @@ const Map = (props) => {
                   onMouseEnter={() => {
                     try {
                        setTooltipContent(<><p>{geo.properties.LAD13NM}</p><p> {d.cumCasesBySpecimenDateRate} Cases Per 100K  </p></>);
-
                     } catch (error) {
                       setTooltipContent(<><p>{geo.properties.LAD13NM}</p><p>Data Unavailable</p></>);
                     }
