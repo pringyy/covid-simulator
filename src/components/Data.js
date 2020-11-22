@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Grid } from "@material-ui/core";
+
 import BarChart from "./BarChart";
+import { Grid } from "@material-ui/core";
 import LineGraph from "./LineGraph";
+import axios from "axios";
 
 const Data = (props) => {
   const { area } = props;
 
-  const [data, setData] = useState({});
+  const [cases, setCases] = useState({ daily: [], cumulative: [] });
+  const [deaths, setDeaths] = useState({ daily: [], cumulative: [] });
   const [loaded, setLoaded] = useState(false);
 
   const endpoint =
@@ -19,8 +21,30 @@ const Data = (props) => {
     axios
       .get(endpoint)
       .then((res) => {
-        console.log(res.data.data);
-        setData(res.data.data);
+        // get data in correct format for graphs
+        for (let i = 0; i < res.data.data.length; i++) {
+          let data = res.data.data[i];
+
+          setDeaths((prevDeaths) => {
+            prevDeaths.daily[data.date] = data.deaths.daily;
+            return { ...prevDeaths };
+          });
+
+          setDeaths((prevDeaths) => {
+            prevDeaths.cumulative[data.date] = data.deaths.cumulative;
+            return { ...prevDeaths };
+          });
+
+          setCases((prevCases) => {
+            prevCases.daily[data.date] = data.cases.daily;
+            return { ...prevCases };
+          });
+
+          setCases((prevCases) => {
+            prevCases.cumulative[data.date] = data.cases.cumulative;
+            return { ...prevCases };
+          });
+        }
         setLoaded(true);
       })
       .catch((err) => console.log(err));
@@ -30,11 +54,11 @@ const Data = (props) => {
     <>
       {loaded ? (
         <Grid container spacing={1}>
-          <BarChart data={data} area={area} type="Cases" />
-          <LineGraph data={data} area={area} type="Cases" />
+          <BarChart data={deaths.daily} area={area} type="Deaths" />
+          <LineGraph data={deaths.cumulative} area={area} type="Deaths" />
 
-          <BarChart data={data} area={area} type="Deaths" />
-          <LineGraph data={data} area={area} type="Deaths" />
+          <BarChart data={cases.daily} area={area} type="Cases" />
+          <LineGraph data={cases.cumulative} area={area} type="Cases" />
 
           {/* <PieChart data={data} area={area} /> */}
         </Grid>

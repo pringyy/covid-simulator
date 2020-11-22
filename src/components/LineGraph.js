@@ -4,30 +4,11 @@ import ReactApexChart from "react-apexcharts";
 const LineGraph = (props) => {
   const { data, area, type } = props;
 
-  const stripData = (data) => {
-    let dates = [],
-      cases = [],
-      deaths = [];
-
-    for (let i = 0; i < data.length; i++) {
-      dates.push(data[i].date);
-
-      if (type === "Cases") {
-        cases.push(data[i].cases.cumulative);
-      } else {
-        deaths.push(data[i].deaths.cumulative);
-      }
-    }
-    return [dates, cases, deaths];
-  };
-
-  const [dates, cases, deaths] = stripData(data);
-
   const chart = {
     series: [
       {
         name: "Cumulative " + type,
-        data: type === "Cases" ? cases.reverse() : deaths.reverse(),
+        data: Object.values(data),
       },
     ],
     options: {
@@ -39,6 +20,9 @@ const LineGraph = (props) => {
         zoom: {
           enabled: false,
         },
+        animations: {
+          enabled: false,
+        },
       },
       dataLabels: {
         enabled: false,
@@ -47,7 +31,7 @@ const LineGraph = (props) => {
         curve: "smooth",
       },
       xaxis: {
-        categories: dates.reverse(),
+        categories: Object.keys(data),
         type: "datetime",
         labels: {
           format: "MMM yy",

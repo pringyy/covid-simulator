@@ -1,10 +1,11 @@
 import "./styles.css";
 
+import React, { useState } from "react";
+
 import Data from "./components/Data";
+import { Grid } from "@material-ui/core";
 import Map from "./components/map";
 import ReactTooltip from "react-tooltip";
-import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
 
 const App = () => {
   const [areas, setAreas] = useState([]);

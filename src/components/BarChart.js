@@ -4,30 +4,11 @@ import ReactApexChart from "react-apexcharts";
 const BarChart = (props) => {
   const { data, area, type } = props;
 
-  const stripData = (data) => {
-    let dates = [],
-      dailyCases = [],
-      dailyDeaths = [];
-
-    for (let i = 0; i < data.length; i++) {
-      dates.push(data[i].date);
-
-      if (type === "Cases") {
-        dailyCases.push(data[i].cases.daily);
-      } else {
-        dailyDeaths.push(data[i].deaths.daily);
-      }
-    }
-    return [dates, dailyCases, dailyDeaths];
-  };
-
-  const [dates, dailyCases, dailyDeaths] = stripData(data);
-
   const chart = {
     series: [
       {
         name: "Daily " + type,
-        data: type === "Cases" ? dailyCases.reverse() : dailyDeaths.reverse(),
+        data: Object.values(data),
       },
     ],
     options: {
@@ -37,6 +18,9 @@ const BarChart = (props) => {
           show: false,
         },
         zoom: {
+          enabled: false,
+        },
+        animations: {
           enabled: false,
         },
       },
@@ -54,7 +38,7 @@ const BarChart = (props) => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: dates.reverse(),
+        categories: Object.keys(data),
         type: "datetime",
         labels: {
           format: "MMM yy",

@@ -9,7 +9,9 @@ import React, { memo } from "react";
 const geoUrl =
   "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/gb/topo_lad.json";
 
-const Map = ({ setTooltipContent, areas, setAreas }) => {
+const Map = (props) => {
+  const { setTooltipContent, areas, setAreas } = props;
+
   return (
     <>
       <ComposableMap
@@ -30,7 +32,9 @@ const Map = ({ setTooltipContent, areas, setAreas }) => {
                     setTooltipContent("");
                   }}
                   onClick={() => {
-                    setAreas([...areas, geo.properties.LAD13NM]);
+                    if (!areas.includes(geo.properties.LAD13NM)) {
+                      setAreas([...areas, geo.properties.LAD13NM]);
+                    }
                   }}
                   style={{
                     default: {
