@@ -2,18 +2,46 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const LineGraph = (props) => {
-  const { data, area, type } = props;
+  const { area1, area2, area3, dates } = props;
+
+  // console.log(Object.keys(area1).length);
+  // console.log(Object.keys(area2).length);
+  // console.log(Object.keys(area3).length);
+
+  const mergeArrays = (...arrays) => {
+    let jointArray = [];
+
+    arrays.forEach((array) => {
+      jointArray = [...jointArray, ...array];
+    });
+    const uniqueArray = jointArray.reduce((newArray, item) => {
+      if (newArray.includes(item)) {
+        return newArray;
+      } else {
+        return [...newArray, item];
+      }
+    }, []);
+    return uniqueArray;
+  };
 
   const chart = {
     series: [
       {
-        name: "Cumulative " + type,
-        data: Object.values(data),
+        name: "Area 1",
+        data: Object.values(area1),
+      },
+      {
+        name: "Area 2",
+        data: Object.values(area2),
+      },
+      {
+        name: "Area 3",
+        data: Object.values(area3),
       },
     ],
     options: {
       chart: {
-        type: "line",
+        type: "area",
         toolbar: {
           show: false,
         },
@@ -31,7 +59,7 @@ const LineGraph = (props) => {
         curve: "smooth",
       },
       xaxis: {
-        categories: Object.keys(data),
+        categories: dates,
         type: "datetime",
         labels: {
           format: "MMM yy",
@@ -42,24 +70,29 @@ const LineGraph = (props) => {
           text: "Date",
         },
       },
-      yaxis: {
-        title: {
-          text: "Number of " + type,
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      title: {
-        text: "Cumulative COVID-19 " + type + " in " + area,
-        align: "center",
-      },
-
+      // yaxis: {
+      //   title: {
+      //     text: "Number of Cases",
+      //   },
+      // },
+      // fill: {
+      //   opacity: 40,
+      // },
+      // title: {
+      //   text: "Cumulative COVID-19 Cases",
+      //   align: "center",
+      // },
       tooltip: {
-        y: {
-          formatter: (val) => {
-            return val + " " + type;
-          },
+        shared: true,
+        // intersect: false,
+        // y: {
+        //   formatter: (val) => {
+        //     return val + " cases";
+        //   },
+        // },
+
+        x: {
+          format: "dd/MM/yy",
         },
       },
     },
@@ -67,7 +100,7 @@ const LineGraph = (props) => {
 
   return (
     <>
-      {chart.series[0].data.every((element) => element === null) ? (
+      {/* {chart.series[0].data.every((element) => element === null) ? (
         <p>
           No cumulative data available for {type.toLowerCase()} in {area}.
         </p>
@@ -75,11 +108,18 @@ const LineGraph = (props) => {
         <ReactApexChart
           options={chart.options}
           series={chart.series}
-          type="line"
+          type="area"
           height={350}
-          width={700}
+          // width={350}
         />
-      )}
+      )} */}
+      <ReactApexChart
+        options={chart.options}
+        series={chart.series}
+        type="area"
+        height={350}
+        // width={350}
+      />
     </>
   );
 };
