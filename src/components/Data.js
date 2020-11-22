@@ -11,6 +11,7 @@ const Data = (props) => {
   const [cases, setCases] = useState({ daily: [], cumulative: [] });
   const [deaths, setDeaths] = useState({ daily: [], cumulative: [] });
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false)
 
   const endpoint =
     "https://api.coronavirus.data.gov.uk/v1/data?" +
@@ -47,7 +48,7 @@ const Data = (props) => {
         }
         setLoaded(true);
       })
-      .catch((err) => console.log(err));
+      .catch(() => setError(true));
   }, []);
 
   return (
@@ -62,7 +63,7 @@ const Data = (props) => {
 
           {/* <PieChart data={data} area={area} /> */}
         </Grid>
-      ) : (
+      ) : error? <p>No data available for {area}</p> :(
         <p>loading...</p>
       )}
     </>
