@@ -13,7 +13,7 @@ package-lock.json
 
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
-
+build
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
