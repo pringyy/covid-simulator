@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import LineGraph from "./LineGraph";
+import BarChart from "./BarChart";
+import { Grid } from "@material-ui/core";
 import axios from "axios";
 
-const CumulativeCases = (props) => {
+const DailyCases = (props) => {
   const { areas } = props;
 
   const [area1Cases, setArea1Cases] = useState({});
   const [area2Cases, setArea2Cases] = useState({});
   const [area3Cases, setArea3Cases] = useState({});
-
-  const [area1Deaths, setArea1Deaths] = useState({});
-  const [area2Deaths, setArea2Deaths] = useState({});
-  const [area3Deaths, setArea3Deaths] = useState({});
 
   const [dates, setDates] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -23,8 +20,7 @@ const CumulativeCases = (props) => {
 
     for (let i = 0; i < res.data.data.length; i++) {
       let data = res.data.data[i];
-      area.cases[data.date] = data.cases.cumulative;
-      area.deaths[data.date] = data.deaths.cumulative;
+      area.cases[data.date] = data.cases.daily;
     }
     return area;
   };
@@ -49,15 +45,12 @@ const CumulativeCases = (props) => {
           switch (i + 1) {
             case 1:
               setArea1Cases(temp.cases);
-              setArea1Deaths(temp.deaths)
               break;
             case 2:
               setArea2Cases(temp.cases);
-              setArea2Deaths(temp.deaths)
               break;
             case 3:
               setArea3Cases(temp.cases);
-              setArea3Deaths(temp.deaths)
               break;
           }
           setLoaded(true);
@@ -74,11 +67,19 @@ const CumulativeCases = (props) => {
     <>
       {loaded ? (
         <>
-          <h1>Cumulative Cases</h1>
-          <LineGraph area1={area1Cases} area2={area2Cases} area3={area3Cases} dates={dates} areas={areas} id={'Cases'} />
-          
-          <h1>Cumulative Deaths</h1>
-          <LineGraph area1 = {area1Deaths} area2 = {area2Deaths} area3 = {area3Deaths} dates={dates} areas={areas} id={'Deaths'}/>
+          <h1>Daily Cases</h1>
+
+          <Grid container spacing={1}> 
+            <Grid item xs={12} md={4}>
+              <BarChart data={area1Cases} area={areas[2]} type={'cases'} color={'#008FFB'} group={'dailyCases'} id={'graph1'} dates={dates} />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <BarChart data={area2Cases} area={areas[1]} type={'cases'} color={'#00E396'} group={'dailyCases'} id={'graph2'} dates={dates} />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <BarChart data={area3Cases} area={areas[0]} type={'cases'} color={'#FEB019'} group={'dailyCases'} id={'graph3'} dates={dates} />
+            </Grid>
+          </Grid>
         </>
       ) : error ? (
         <p>No data available.</p>
@@ -89,4 +90,4 @@ const CumulativeCases = (props) => {
   );
 };
 
-export default CumulativeCases;
+export default DailyCases;

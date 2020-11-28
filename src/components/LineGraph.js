@@ -3,11 +3,6 @@ import ReactApexChart from "react-apexcharts";
 
 const LineGraph = (props) => {
   const { area1, area2, area3, dates, areas, id } = props;
-  console.log(props)
-   console.log(Object.keys(area1).length);
-   console.log(Object.keys(area2).length);
-   console.log(Object.keys(area3).length);
-   console.log(Object.keys(dates).length)
 
   const mergeArrays = (...arrays) => {
     let jointArray = [];
@@ -24,7 +19,7 @@ const LineGraph = (props) => {
     }, []);
     return uniqueArray;
   };
-console.log(props)
+
   const chart = {
     series: [
       {

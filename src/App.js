@@ -3,10 +3,10 @@ import "./styles.css";
 import React, { useState } from "react";
 
 import CumulativeCases from "./components/CumulativeCasesAndDeaths";
+import DailyCases from "./components/DailyCases";
 import { Grid } from "@material-ui/core";
 import Map from "./components/Map";
 import ReactTooltip from "react-tooltip";
-import Visual from "./components/Visual";
 
 const App = () => {
   const [areas, setAreas] = useState([]);
@@ -17,8 +17,7 @@ const App = () => {
       <Grid
         item
         xs={12}
-        sm={12}
-        md={6}
+        md={5}
         style={{
           height: "100vh",
         }}
@@ -31,16 +30,16 @@ const App = () => {
         <ReactTooltip>{content}</ReactTooltip>
       </Grid>
 
-      <Grid item xs={12} sm={12} md={6}>
-        {/* {areas.map((area) => (
-          <Visual area={area} />
-        ))} */}
-
+      <Grid item xs={12} md={7}>
         {areas.length === 3 ? (
-          <CumulativeCases areas={areas} />
+          <>
+            <CumulativeCases areas={areas} />
+            <DailyCases areas={areas} />
+          </>
         ) : (
           <p>Please select 3 areas</p>
         )}
+        
       </Grid>
     </Grid>
   );
