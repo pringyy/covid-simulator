@@ -77,6 +77,9 @@ const Map = (props) => {
                       }
                     }}
                     fill={
+                      areas[0]===geo.properties.LAD13NM ? '#008FFB':
+                      areas[1] === geo.properties.LAD13NM ? '#00E396':
+                      areas[2]===geo.properties.LAD13NM? '#FEB019':
                       d
                         ? colorScale(d["cumCasesBySpecimenDateRate"])
                         : "#F5F4F6"
@@ -106,6 +109,7 @@ const Map = (props) => {
                         outline: "none",
                       },
                       pressed: {
+                        fill: '#FFF',
                         outline: "none",
                       },
                     }}

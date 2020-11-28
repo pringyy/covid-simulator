@@ -5,20 +5,25 @@ import axios from "axios";
 
 const CumulativeCases = (props) => {
   const { areas } = props;
+  const [area1Cases, setArea1Cases] = useState({});
+  const [area2Cases, setArea2Cases] = useState({});
+  const [area3Cases, setArea3Cases] = useState({});
 
-  const [area1, setArea1] = useState({});
-  const [area2, setArea2] = useState({});
-  const [area3, setArea3] = useState({});
+  const [area1Deaths, setArea1Deaths] = useState({});
+  const [area2Deaths, setArea2Deaths] = useState({});
+  const [area3Deaths, setArea3Deaths] = useState({});
+
   const [dates, setDates] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
   const stripData = (res) => {
-    let area = {};
+    let area = {cases:{}, deaths:{}};
 
     for (let i = 0; i < res.data.data.length; i++) {
       let data = res.data.data[i];
-      area[data.date] = data.cases.cumulative;
+      area.cases[data.date] = data.cases.cumulative;
+      area.deaths[data.date] = data.deaths.cumulative;
     }
     return area;
   };
@@ -34,20 +39,27 @@ const CumulativeCases = (props) => {
       const endpoint =
         "https://api.coronavirus.data.gov.uk/v1/data?" +
         `filters=areaType=ltla;areaName=${area}&` +
-        'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesBySpecimenDate","cumulative":"cumCasesBySpecimenDateRate"},"deaths":{"daily":"newDeathsByDeathDate","cumulative":"cumDeathsByDeathDate"}}';
-
+        'structure={"date":"date","name":"areaName","code":"areaCode","cases":{"daily":"newCasesBySpecimenDate","cumulative":"cumCasesBySpecimenDate"},"deaths":{"daily":"newDeaths28DaysByDeathDate","cumulative":"cumDeaths28DaysByDeathDate"}}';
       axios
         .get(endpoint)
         .then((res) => {
+          //console.log(res.data.data)
+          let temp = stripData(res)
+
           switch (i + 1) {
             case 1:
-              setArea1(stripData(res));
+              setArea1Cases(temp.cases);
+              setArea1Deaths(temp.deaths)
               break;
             case 2:
-              setArea2(stripData(res));
+              setArea2Cases(temp.cases);
+                            setArea2Deaths(temp.deaths)
+
               break;
             case 3:
-              setArea3(stripData(res));
+              setArea3Cases(temp.cases);
+                            setArea3Deaths(temp.deaths)
+
               break;
           }
           setLoaded(true);
@@ -57,47 +69,51 @@ const CumulativeCases = (props) => {
   }, [areas]);
 
   useEffect(() => {
-    setDates(intersection(area1, area2, area3));
-    console.log("DatesEffect");
-  }, [area1, area2, area3]);
+    setDates(intersection(area1Cases, area2Cases, area3Cases));
+  }, [area1Cases, area2Cases, area3Cases]);
 
-  useEffect(() => {
-    Object.keys(area1).forEach((key) => {
+  /*useEffect(() => {
+    Object.keys(area1Cases).forEach((key) => {
       if (!dates.includes(key)) {
         // console.log(key);
-        setArea1((prevArea) => {
+        setArea1Cases((prevArea) => {
           delete prevArea[key];
           return prevArea;
         });
       }
     });
 
-    Object.keys(area2).forEach((key) => {
+    Object.keys(area2Cases).forEach((key) => {
       if (!dates.includes(key)) {
         // console.log(key);
-        setArea2((prevArea) => {
+        setArea2Cases((prevArea) => {
           delete prevArea[key];
           return prevArea;
         });
       }
     });
 
-    Object.keys(area3).forEach((key) => {
+    Object.keys(area3Cases).forEach((key) => {
       if (!dates.includes(key)) {
         // console.log(key);
-        setArea3((prevArea) => {
+        setArea3Cases((prevArea) => {
           delete prevArea[key];
           return prevArea;
         });
       }
       console.log("Areas Effect");
     });
-  }, [dates]);
+  }, [dates]);*/
 
   return (
     <>
       {loaded ? (
-        <LineGraph area1={area1} area2={area2} area3={area3} dates={dates} />
+        <>
+        <h1>Cumulative Cases</h1>
+        <LineGraph area1={area1Cases} area2={area2Cases} area3={area3Cases} dates={dates} areas={areas} id={'Cases'} />
+        <h1>Cumulative Deaths</h1>
+        <LineGraph area1 = {area1Deaths} area2 = {area2Deaths} area3 = {area3Deaths} dates={dates} areas={areas} id={'Deaths'}/></>
+
       ) : error ? (
         <p>No data available.</p>
       ) : (

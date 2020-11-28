@@ -2,11 +2,12 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const LineGraph = (props) => {
-  const { area1, area2, area3, dates } = props;
-
-  // console.log(Object.keys(area1).length);
-  // console.log(Object.keys(area2).length);
-  // console.log(Object.keys(area3).length);
+  const { area1, area2, area3, dates, areas, id } = props;
+  console.log(props)
+   console.log(Object.keys(area1).length);
+   console.log(Object.keys(area2).length);
+   console.log(Object.keys(area3).length);
+   console.log(Object.keys(dates).length)
 
   const mergeArrays = (...arrays) => {
     let jointArray = [];
@@ -23,25 +24,29 @@ const LineGraph = (props) => {
     }, []);
     return uniqueArray;
   };
-
+console.log(props)
   const chart = {
     series: [
       {
-        name: "Area 1",
+        name: areas[0],
         data: Object.values(area1),
       },
       {
-        name: "Area 2",
+        name: areas[1],
         data: Object.values(area2),
       },
       {
-        name: "Area 3",
+        name: areas[2],
         data: Object.values(area3),
       },
     ],
     options: {
       chart: {
-        type: "area",
+              title:{text: id},
+
+        id:id,
+        group: 'common',
+        type: "line",
         toolbar: {
           show: false,
         },
@@ -82,6 +87,7 @@ const LineGraph = (props) => {
       //   text: "Cumulative COVID-19 Cases",
       //   align: "center",
       // },
+
       tooltip: {
         shared: true,
         // intersect: false,

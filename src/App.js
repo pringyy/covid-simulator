@@ -2,7 +2,7 @@ import "./styles.css";
 
 import React, { useState } from "react";
 
-import CumulativeCases from "./components/CumulativeCases";
+import CumulativeCases from "./components/CumulativeCasesAndDeaths";
 import { Grid } from "@material-ui/core";
 import Map from "./components/Map";
 import ReactTooltip from "react-tooltip";
