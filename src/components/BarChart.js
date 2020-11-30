@@ -2,8 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const BarChart = (props) => {
-  const { data, area, type } = props;
-
+  const { data, area, type ,color, group, id, dates} = props;
   const chart = {
     series: [
       {
@@ -12,7 +11,10 @@ const BarChart = (props) => {
       },
     ],
     options: {
+      colors: [color],
       chart: {
+        id: id,
+        group: group,
         type: "bar",
         toolbar: {
           show: false,
@@ -35,10 +37,10 @@ const BarChart = (props) => {
       stroke: {
         show: true,
         width: 2,
-        colors: ["transparent"],
+        colors: [color],
       },
       xaxis: {
-        categories: Object.keys(data),
+        categories: dates,
         type: "datetime",
         labels: {
           format: "MMM yy",
@@ -53,21 +55,26 @@ const BarChart = (props) => {
         title: {
           text: "Number of " + type,
         },
+        labels:{
+          minWidth: 0
+        }
       },
       fill: {
         opacity: 1,
       },
       title: {
-        text: "Daily COVID-19 " + type + " in " + area,
+        text: area,
         align: "center",
       },
-
       tooltip: {
         y: {
           formatter: (val) => {
             return val + " " + type;
           },
         },
+        marker:{
+          show: false,
+        }
       },
     },
   };
@@ -84,7 +91,6 @@ const BarChart = (props) => {
           series={chart.series}
           type="bar"
           height={350}
-          width={350}
         />
       )}
     </>
@@ -92,3 +98,4 @@ const BarChart = (props) => {
 };
 
 export default BarChart;
+

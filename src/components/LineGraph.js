@@ -2,17 +2,28 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const LineGraph = (props) => {
-  const { data, area, type } = props;
+  const { area1, area2, area3, dates, areas, id, type } = props;
 
   const chart = {
     series: [
       {
-        name: "Cumulative " + type,
-        data: Object.values(data),
+        name: areas[0],
+        data: Object.values(area1),
+      },
+      {
+        name: areas[1],
+        data: Object.values(area2),
+      },
+      {
+        name: areas[2],
+        data: Object.values(area3),
       },
     ],
     options: {
       chart: {
+        title:{text: id},
+        id:id,
+        group: 'cumulative',
         type: "line",
         toolbar: {
           show: false,
@@ -31,7 +42,7 @@ const LineGraph = (props) => {
         curve: "smooth",
       },
       xaxis: {
-        categories: Object.keys(data),
+        categories: dates,
         type: "datetime",
         labels: {
           format: "MMM yy",
@@ -47,19 +58,25 @@ const LineGraph = (props) => {
           text: "Number of " + type,
         },
       },
-      fill: {
-        opacity: 1,
-      },
-      title: {
-        text: "Cumulative COVID-19 " + type + " in " + area,
-        align: "center",
-      },
+      // fill: {
+      //   opacity: 40,
+      // },
+      // title: {
+      //   text: "Cumulative COVID-19 Cases",
+      //   align: "center",
+      // },
 
       tooltip: {
-        y: {
-          formatter: (val) => {
-            return val + " " + type;
-          },
+        shared: true,
+        // intersect: false,
+        // y: {
+        //   formatter: (val) => {
+        //     return val + " cases";
+        //   },
+        // },
+
+        x: {
+          format: "dd/MM/yy",
         },
       },
     },
@@ -67,19 +84,13 @@ const LineGraph = (props) => {
 
   return (
     <>
-      {chart.series[0].data.every((element) => element === null) ? (
-        <p>
-          No cumulative data available for {type.toLowerCase()} in {area}.
-        </p>
-      ) : (
-        <ReactApexChart
-          options={chart.options}
-          series={chart.series}
-          type="line"
-          height={350}
-          width={700}
-        />
-      )}
+      <ReactApexChart
+        options={chart.options}
+        series={chart.series}
+        type="area"
+        height={350}
+        // width={350}
+      />
     </>
   );
 };
