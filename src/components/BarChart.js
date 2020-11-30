@@ -11,10 +11,10 @@ const BarChart = (props) => {
       },
     ],
     options: {
-      colors :[color],
+      colors: [color],
       chart: {
-        group: group,
         id: id,
+        group: group,
         type: "bar",
         toolbar: {
           show: false,
@@ -66,7 +66,6 @@ const BarChart = (props) => {
         text: area,
         align: "center",
       },
-
       tooltip: {
         y: {
           formatter: (val) => {
@@ -74,7 +73,7 @@ const BarChart = (props) => {
           },
         },
         marker:{
-          show :true
+          show: false,
         }
       },
     },
@@ -92,7 +91,6 @@ const BarChart = (props) => {
           series={chart.series}
           type="bar"
           height={350}
-          // width={350}
         />
       )}
     </>

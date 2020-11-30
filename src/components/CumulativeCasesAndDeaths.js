@@ -74,10 +74,10 @@ const CumulativeCases = (props) => {
     <>
       {loaded ? (
         <>
-          <h1>Cumulative Cases</h1>
+          <h3>Cumulative Cases</h3>
           <LineGraph area1={area1Cases} area2={area2Cases} area3={area3Cases} dates={dates} areas={areas} id={'Cases'} />
           
-          <h1>Cumulative Deaths</h1>
+          <h3>Cumulative Deaths</h3>
           <LineGraph area1 = {area1Deaths} area2 = {area2Deaths} area3 = {area3Deaths} dates={dates} areas={areas} id={'Deaths'}/>
         </>
       ) : error ? (

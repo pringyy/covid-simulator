@@ -40,7 +40,7 @@ const LineGraph = (props) => {
               title:{text: id},
 
         id:id,
-        group: 'common',
+        group: 'cumulative',
         type: "line",
         toolbar: {
           show: false,
