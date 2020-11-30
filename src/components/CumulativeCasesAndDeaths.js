@@ -14,8 +14,11 @@ const CumulativeCases = (props) => {
   const [area2Deaths, setArea2Deaths] = useState({});
   const [area3Deaths, setArea3Deaths] = useState({});
 
+  const [loaded1, setLoaded1] = useState(false);
+  const [loaded2, setLoaded2] = useState(false);
+  const [loaded3, setLoaded3] = useState(false);
+
   const [dates, setDates] = useState([]);
-  const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
   const stripData = (res) => {
@@ -49,18 +52,22 @@ const CumulativeCases = (props) => {
           switch (i + 1) {
             case 1:
               setArea1Cases(temp.cases);
-              setArea1Deaths(temp.deaths)
+              setArea1Deaths(temp.deaths);
+              setLoaded1(true);
               break;
             case 2:
               setArea2Cases(temp.cases);
-              setArea2Deaths(temp.deaths)
+              setArea2Deaths(temp.deaths);
+              setLoaded2(true);
               break;
             case 3:
               setArea3Cases(temp.cases);
-              setArea3Deaths(temp.deaths)
+              setArea3Deaths(temp.deaths);
+              setLoaded3(true);
+              break;
+            default:
               break;
           }
-          setLoaded(true);
         })
         .catch(() => setError(true));
     });
@@ -72,13 +79,13 @@ const CumulativeCases = (props) => {
 
   return (
     <>
-      {loaded ? (
+      {loaded1 && loaded2 && loaded3 ? (
         <>
           <h3>Cumulative Cases</h3>
-          <LineGraph area1={area1Cases} area2={area2Cases} area3={area3Cases} dates={dates} areas={areas} id={'Cases'} />
+          <LineGraph area1={area1Cases} area2={area2Cases} area3={area3Cases} dates={dates} areas={areas} id={'Cases'} type="cases" />
           
           <h3>Cumulative Deaths</h3>
-          <LineGraph area1 = {area1Deaths} area2 = {area2Deaths} area3 = {area3Deaths} dates={dates} areas={areas} id={'Deaths'}/>
+          <LineGraph area1={area1Deaths} area2={area2Deaths} area3={area3Deaths} dates={dates} areas={areas} id={'Deaths'} type="deaths" />
         </>
       ) : error ? (
         <p>No data available.</p>

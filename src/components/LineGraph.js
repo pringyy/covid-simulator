@@ -2,23 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const LineGraph = (props) => {
-  const { area1, area2, area3, dates, areas, id } = props;
-
-  const mergeArrays = (...arrays) => {
-    let jointArray = [];
-
-    arrays.forEach((array) => {
-      jointArray = [...jointArray, ...array];
-    });
-    const uniqueArray = jointArray.reduce((newArray, item) => {
-      if (newArray.includes(item)) {
-        return newArray;
-      } else {
-        return [...newArray, item];
-      }
-    }, []);
-    return uniqueArray;
-  };
+  const { area1, area2, area3, dates, areas, id, type } = props;
 
   const chart = {
     series: [
@@ -37,8 +21,7 @@ const LineGraph = (props) => {
     ],
     options: {
       chart: {
-              title:{text: id},
-
+        title:{text: id},
         id:id,
         group: 'cumulative',
         type: "line",
@@ -70,11 +53,11 @@ const LineGraph = (props) => {
           text: "Date",
         },
       },
-      // yaxis: {
-      //   title: {
-      //     text: "Number of Cases",
-      //   },
-      // },
+      yaxis: {
+        title: {
+          text: "Number of " + type,
+        },
+      },
       // fill: {
       //   opacity: 40,
       // },
@@ -101,19 +84,6 @@ const LineGraph = (props) => {
 
   return (
     <>
-      {/* {chart.series[0].data.every((element) => element === null) ? (
-        <p>
-          No cumulative data available for {type.toLowerCase()} in {area}.
-        </p>
-      ) : (
-        <ReactApexChart
-          options={chart.options}
-          series={chart.series}
-          type="area"
-          height={350}
-          // width={350}
-        />
-      )} */}
       <ReactApexChart
         options={chart.options}
         series={chart.series}

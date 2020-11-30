@@ -37,7 +37,7 @@ const Map = (props) => {
       );
       colorScale = scaleLinear()
         .domain([0, maxVal])
-        .range(["#ffedea", "#ff5233"]);
+        .range(["#ede7f6", "#311b92"]);
     });
   }, []);
 

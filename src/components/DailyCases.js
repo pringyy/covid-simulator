@@ -14,13 +14,12 @@ const DailyCases = (props) => {
   const [area1Deaths, setArea1Deaths] = useState({});
   const [area2Deaths, setArea2Deaths] = useState({});
   const [area3Deaths, setArea3Deaths] = useState({});
-
-  const [dates, setDates] = useState([]);
   
   const [loaded1, setLoaded1] = useState(false);
   const [loaded2, setLoaded2] = useState(false);
   const [loaded3, setLoaded3] = useState(false);
 
+  const [dates, setDates] = useState([]);
   const [error, setError] = useState(false);
 
   const stripData = (res) => {
