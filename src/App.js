@@ -15,7 +15,7 @@ const App = () => {
 
   return (
     <>
-      <AppBar elevation={0} style={{margin: 0, backgroundColor: "#311b92"}}>
+      <AppBar elevation={0} style={{ margin: 0, backgroundColor: "#311b92" }}>
         <Toolbar>
           <Typography variant="h6">
             <b>COVID-19 Visualiser</b>

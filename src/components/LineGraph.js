@@ -21,9 +21,9 @@ const LineGraph = (props) => {
     ],
     options: {
       chart: {
-        title:{text: id},
-        id:id,
-        group: 'cumulative',
+        title: { text: id },
+        id: id,
+        group: "cumulative",
         type: "line",
         toolbar: {
           show: false,
@@ -58,23 +58,8 @@ const LineGraph = (props) => {
           text: "Number of " + type,
         },
       },
-      // fill: {
-      //   opacity: 40,
-      // },
-      // title: {
-      //   text: "Cumulative COVID-19 Cases",
-      //   align: "center",
-      // },
-
       tooltip: {
         shared: true,
-        // intersect: false,
-        // y: {
-        //   formatter: (val) => {
-        //     return val + " cases";
-        //   },
-        // },
-
         x: {
           format: "dd/MM/yy",
         },

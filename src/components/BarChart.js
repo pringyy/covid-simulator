@@ -2,7 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const BarChart = (props) => {
-  const { data, area, type ,color, group, id, dates} = props;
+  const { data, area, type, color, group, id, dates } = props;
   const chart = {
     series: [
       {
@@ -55,9 +55,9 @@ const BarChart = (props) => {
         title: {
           text: "Number of " + type,
         },
-        labels:{
-          minWidth: 0
-        }
+        labels: {
+          minWidth: 0,
+        },
       },
       fill: {
         opacity: 1,
@@ -72,9 +72,9 @@ const BarChart = (props) => {
             return val + " " + type;
           },
         },
-        marker:{
+        marker: {
           show: false,
-        }
+        },
       },
     },
   };
@@ -98,4 +98,3 @@ const BarChart = (props) => {
 };
 
 export default BarChart;
-

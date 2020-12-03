@@ -22,7 +22,7 @@ const CumulativeCases = (props) => {
   const [error, setError] = useState(false);
 
   const stripData = (res) => {
-    let area = {cases:{}, deaths:{}};
+    let area = { cases: {}, deaths: {} };
 
     for (let i = 0; i < res.data.data.length; i++) {
       let data = res.data.data[i];
@@ -47,7 +47,7 @@ const CumulativeCases = (props) => {
       axios
         .get(endpoint)
         .then((res) => {
-          let temp = stripData(res)
+          let temp = stripData(res);
 
           switch (i + 1) {
             case 1:
@@ -82,10 +82,26 @@ const CumulativeCases = (props) => {
       {loaded1 && loaded2 && loaded3 ? (
         <>
           <h3>Cumulative Cases</h3>
-          <LineGraph area1={area1Cases} area2={area2Cases} area3={area3Cases} dates={dates} areas={areas} id={'Cases'} type="cases" />
-          
+          <LineGraph
+            area1={area1Cases}
+            area2={area2Cases}
+            area3={area3Cases}
+            dates={dates}
+            areas={areas}
+            id={"Cases"}
+            type="cases"
+          />
+
           <h3>Cumulative Deaths</h3>
-          <LineGraph area1={area1Deaths} area2={area2Deaths} area3={area3Deaths} dates={dates} areas={areas} id={'Deaths'} type="deaths" />
+          <LineGraph
+            area1={area1Deaths}
+            area2={area2Deaths}
+            area3={area3Deaths}
+            dates={dates}
+            areas={areas}
+            id={"Deaths"}
+            type="deaths"
+          />
         </>
       ) : error ? (
         <p>No data available.</p>

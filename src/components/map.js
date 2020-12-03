@@ -19,12 +19,12 @@ const Map = (props) => {
 
   const [data, setData] = useState();
 
-  let today = new Date();
-  let todayString = `${today.getFullYear()}-${today.getMonth()}-${
-    today.getDate() - 5
-  }`;
+  let date = new Date();
+  date.setDate(date.getDate() - 5);
 
-  const endpoint = `https://api.coronavirus.data.gov.uk/v1/data?page=1-100&filters=areaType=ltla;date=${todayString}&structure=%7B%22area%22:%22areaName%22,%22cumCasesBySpecimenDateRate%22:%22cumCasesBySpecimenDateRate%22%7D`;
+  let dateString = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+  const endpoint = `https://api.coronavirus.data.gov.uk/v1/data?page=1-100&filters=areaType=ltla;date=${dateString}&structure=%7B%22area%22:%22areaName%22,%22cumCasesBySpecimenDateRate%22:%22cumCasesBySpecimenDateRate%22%7D`;
 
   useEffect(() => {
     axios.get(endpoint).then((res) => {
@@ -77,10 +77,13 @@ const Map = (props) => {
                       }
                     }}
                     fill={
-                      areas[0]===geo.properties.LAD13NM ? '#008FFB':
-                      areas[1] === geo.properties.LAD13NM ? '#00E396':
-                      areas[2]===geo.properties.LAD13NM? '#FEB019':
-                      d
+                      areas[0] === geo.properties.LAD13NM
+                        ? "#008FFB"
+                        : areas[1] === geo.properties.LAD13NM
+                        ? "#00E396"
+                        : areas[2] === geo.properties.LAD13NM
+                        ? "#FEB019"
+                        : d
                         ? colorScale(d["cumCasesBySpecimenDateRate"])
                         : "#F5F4F6"
                     }
@@ -109,7 +112,7 @@ const Map = (props) => {
                         outline: "none",
                       },
                       pressed: {
-                        fill: '#FFF',
+                        fill: "#FFF",
                         outline: "none",
                       },
                     }}
